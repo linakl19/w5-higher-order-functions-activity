@@ -10,8 +10,23 @@ WORDS = ["jumps", "laziest", "brown", "a", "quick", "fox", "the", "dog", "over"]
 # comparison value as determined by calling the function passed in the key
 # parameter on it. This will be very similar to the min_function_custom
 # developed in the Learn reading.
-def my_max(collection, key):
-    pass
+def my_max(collection, key=None):
+    if not key:
+        return my_max(collection)
+    
+    if not collection:
+        raise ValueError("Collection is empty")
+    
+    my_max_word = collection[0]
+    my_max_key = key(collection[0])
+    
+    for word in WORDS:
+        if key(word) > my_max_key:
+            my_max_word = word
+            my_max_key = key(word)
+    
+    return my_max_word
+
 
 # Implement a custom version of filter, called my_filter
 # my_filter takes a function (should_keep) which it will call on every item in
@@ -20,9 +35,14 @@ def my_max(collection, key):
 # items, which should be returned
 # WARNING: notice the parameters order is reversed compared to my_max
 def my_filter(should_keep, collection):
-    # if you've encountered list comprehensions, this would be a
-    # great place to use one
-    pass
+
+    filtered_list = [word for word in collection if should_keep(word)]
+
+    # for word in collection:
+    #     if should_keep(word):
+    #         filtered_list.append(word)
+    
+    return filtered_list
 
 # Implement a custom version of map, called my_map
 # my_map takes a function (transform) which it will call on every item in the
@@ -31,9 +51,13 @@ def my_filter(should_keep, collection):
 # should be returned.
 # WARNING: notice the parameters order is reversed compared to my_max
 def my_map(transform, collection):
-    # if you've encountered list comprehensions, this would be a
-    # great place to use one
-    pass
+    
+    mapped_list = [transform(word) for word in collection ]
+
+    # for word in collection:
+        # mapped_list.append(transform(word))
+    
+    return mapped_list
 
 #################################################
 # NO CODE BELOW THIS POINT NEEDS TO BE MODIFIED #
